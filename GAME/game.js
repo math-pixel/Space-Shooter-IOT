@@ -67,14 +67,30 @@ function draw() {
         }
     })
     
+    // draw ennemie
     ennemies.forEach((currentEnnemi, index) => {
         image(missileImg, currentEnnemi.x, currentEnnemi.y, 50, 50);
-        currentEnnemi.y += currentEnnemi.speed;
 
+
+        rectCurrentEnnemi = [currentEnnemi.x, currentEnnemi.y, 50, 50]
+        
+        
         if (currentEnnemi.y > 800){
             ennemies.splice(index, 1);
+        }else{
+            allMissile.forEach((cMissile, indexMissile) => {
+                rectMissile = [cMissile.x, cMissile.y, 50, 50]
+                if (rectIsInRect(rectCurrentEnnemi, rectMissile)) {
+                    allMissile.splice(indexMissile,1)
+                    ennemies.splice(index, 1);
+                }
+            })
         }
+        
+        
+        currentEnnemi.y += currentEnnemi.speed;
     })
+
 }
 
 // Step 4: Firing
