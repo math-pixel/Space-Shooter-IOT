@@ -3,11 +3,16 @@ let shipImg;
 let missileImg;
 let ennemieImg;
 let backgroundImage;
+let lifeImage;
 let shipX, shipY;
 let missileX, missileY;
 let allMissile = []
 const missileSpeed = 5;
 const shipSpeed = 3;
+
+let ptLife = 5
+
+let stateGame = "home" // home , inGame, end
 
 
 let ennemies = []
@@ -20,6 +25,8 @@ function preload() {
   ennemieImg = loadImage('assets/ship2.png');
   backgroundImage = loadImage('assets/bg.jpg')
     backgroundImage.play()
+
+    lifeImage = [loadImage('assets/lifes/1.png'), loadImage('assets/lifes/2.png'), loadImage('assets/lifes/3.png'),loadImage('assets/lifes/4.png'),loadImage('assets/lifes/5.png')]
 }
 
 function setup() {
@@ -31,6 +38,34 @@ function setup() {
 // Step 2: Draw
 function draw() {
     image(backgroundImage, 0, 0, 1000, 800)
+
+    switch(stateGame){
+        case "home":
+            textSize(32);
+            fill(255);
+            stroke(0);
+            strokeWeight(4);
+            text('Waiting to connection', 350, 390);
+            break
+            
+        case "inGame":
+            drawGame()
+            break
+
+        case "end":
+            textSize(32);
+            fill(255);
+            stroke(0);
+            strokeWeight(4);
+            text('END GAME', 400, 390);
+            break
+        
+    }
+
+}
+
+function drawGame(){
+    
     
     // Calculate skew values based on movement
     let skewX = 0;
@@ -82,6 +117,10 @@ function draw() {
         
         if (currentEnnemi.y > 800){
             ennemies.splice(index, 1);
+            ptLife -= 1
+            if (ptLife > 0) {
+                stateGame = "end"
+            }
         }else{
             allMissile.forEach((cMissile, indexMissile) => {
                 rectMissile = [cMissile.x, cMissile.y, 50, 50]
@@ -95,7 +134,7 @@ function draw() {
         
         currentEnnemi.y += currentEnnemi.speed;
     })
-
+    image(lifeImage[ptLife], 0, 0)
 }
 
 // Step 4: Firing
