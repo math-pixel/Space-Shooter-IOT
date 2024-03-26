@@ -1,6 +1,7 @@
 // Step 1: Setup
 let shipImg;
 let missileImg;
+let ennemieImg;
 let shipX, shipY;
 let missileX, missileY;
 let allMissile = []
@@ -14,7 +15,8 @@ let ennemieSpeed = 2
 
 function preload() {
   shipImg = loadImage('assets/ship.png');
-  missileImg = loadImage('assets/ship.png');
+  missileImg = loadImage('assets/laser.png');
+  ennemieImg = loadImage('assets/ship2.png')
 }
 
 function setup() {
@@ -69,7 +71,7 @@ function draw() {
     
     // draw ennemie
     ennemies.forEach((currentEnnemi, index) => {
-        image(missileImg, currentEnnemi.x, currentEnnemi.y, 50, 50);
+        image(ennemieImg, currentEnnemi.x, currentEnnemi.y, 50, 50);
 
 
         rectCurrentEnnemi = [currentEnnemi.x, currentEnnemi.y, 50, 50]
