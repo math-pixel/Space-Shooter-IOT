@@ -2,6 +2,7 @@
 let shipImg;
 let missileImg;
 let ennemieImg;
+let backgroundImage;
 let shipX, shipY;
 let missileX, missileY;
 let allMissile = []
@@ -16,7 +17,9 @@ let ennemieSpeed = 2
 function preload() {
   shipImg = loadImage('assets/ship.png');
   missileImg = loadImage('assets/laser.png');
-  ennemieImg = loadImage('assets/ship2.png')
+  ennemieImg = loadImage('assets/ship2.png');
+  backgroundImage = loadImage('assets/bg.jpg')
+    backgroundImage.play()
 }
 
 function setup() {
@@ -27,7 +30,7 @@ function setup() {
 
 // Step 2: Draw
 function draw() {
-    background(220);
+    image(backgroundImage, 0, 0, 1000, 800)
     
     // Calculate skew values based on movement
     let skewX = 0;
@@ -105,7 +108,7 @@ function keyTyped() {
 function ennemieSpawn(interval){
     setTimeout(() => {
     
-        ennemies.push({x: getRandomArbitrary(0, 1000), y: 0, speed: ennemieSpeed})
+        ennemies.push({x: getRandomArbitrary(50, 950), y: 0, speed: ennemieSpeed})
         ennemieSpawn( getRandomArbitrary(500, 2000) )
 
     }, interval )
