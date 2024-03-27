@@ -10,9 +10,9 @@ let allMissile = []
 const missileSpeed = 5;
 const shipSpeed = 3;
 
-let ptLife = 5
+let ptLife = 4
 
-let stateGame = "home" // home , inGame, end
+let stateGame = "inGame" // home , inGame, end
 
 
 let ennemies = []
