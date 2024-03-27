@@ -9,11 +9,11 @@ class HC04():
         self.callback = callback
 
     def process(self, valueSensor):
-        if valueSensor < self.max1:
+        if valueSensor <= self.max1:
             self.updateState(HC04_State_Range_1(self)) 
-        elif valueSensor > self.max1 and valueSensor < self.max2:
+        elif valueSensor > self.max1 and valueSensor <= self.max2:
             self.updateState(HC04_State_Range_2(self)) 
-        elif valueSensor > self.max2 and valueSensor < self.max3:
+        elif valueSensor > self.max2 and valueSensor <= self.max3:
             self.updateState(HC04_State_Range_3(self)) 
         else:
            self.updateState(HC04_State_Range_Unknown(self)) 
@@ -25,6 +25,7 @@ class HC04():
     def actionRange3(self):
         self.callback(12)
     def actionRangeUnknown(self):
+        # self.callback(0)
         print("unknow")
 
     def updateState(self, state):

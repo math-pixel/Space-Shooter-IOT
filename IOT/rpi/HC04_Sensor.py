@@ -5,7 +5,7 @@ import time
 TRIG = 23
 ECHO = 24
 
-def setup():
+def setupHC04Sensor():
     # Utiliser la numérotation BCM pour les broches GPIO
     GPIO.setmode(GPIO.BCM)
 
@@ -45,7 +45,7 @@ def cleanup():
 
 if __name__ == '__main__':
     try:
-        setup()
+        setupHC04Sensor()
         while True:
             distance = get_distance()
             print("Distance:", distance, "cm")
