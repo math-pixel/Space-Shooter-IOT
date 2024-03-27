@@ -8,17 +8,24 @@ class GYRO():
         self.threshold = threshold
 
     def process(self, valueGyro):
-        
+
+        valueX = "IDLE"
+        valueY = "IDLE"
+
         # state X
         if valueGyro.x < valueIdleX - self.threshold:
-            pass
+            valueX = "LEFT"
         elif valueGyro.x > valueIdleX + self.threshold:
-            pass
+            valueX = "RIGHT"
+        else:
+            valueX = "IDLE"
 
         # state Y
         if valueGyro.y < valueIdleY - self.threshold:
-            pass
+            valueY = "DOWN"
         elif valueGyro.y > valueIdleY + self.threshold:
-            pass
+            valueY = "UP"
+        else:
+            valueY = "IDLE"
 
-    
+        return '{ "x":"' + valueX + '", "y":"'+ valueY +'"}'
