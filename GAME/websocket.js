@@ -1,6 +1,6 @@
 
 
-const socket = io("localhost");
+const socket = io();
 
 socket.on("connect", () => {
     console.log(socket.connected); // true
