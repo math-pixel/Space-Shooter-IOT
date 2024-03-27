@@ -13,7 +13,12 @@ const shipSpeed = 3;
 let ptLife = 4
 
 let stateGame = "inGame" // home , inGame, end
-
+let stateMouvement = {
+    up: false,
+    right: false,
+    down: false,
+    left: false
+}
 
 let ennemies = []
 let ennemieSpeed = 2
@@ -70,19 +75,19 @@ function drawGame(){
     // Calculate skew values based on movement
     let skewX = 0;
     let skewY = 0;
-    if (keyIsDown(LEFT_ARROW)) {
+    if (stateMouvement.left) {
         shipX -= shipSpeed;
         skewX = -0.1;
     }
-    if (keyIsDown(RIGHT_ARROW)) {
+    if (stateMouvement.right) {
         shipX += shipSpeed;
         skewX = 0.1;
     }
-    if (keyIsDown(UP_ARROW)) {
+    if (stateMouvement.up) {
         shipY -= shipSpeed;
         skewY = -0.1;
     }
-    if (keyIsDown(DOWN_ARROW)) {
+    if (stateMouvement.down) {
         shipY += shipSpeed;
         skewY = 0.1;
     }
@@ -140,8 +145,12 @@ function drawGame(){
 // Step 4: Firing
 function keyTyped() {
   if (key === ' ') {
-    allMissile.push({x: shipX, y: shipY})
+    fireBullet()
   }
+}
+
+function fireBullet(){
+    allMissile.push({x: shipX, y: shipY})
 }
 
 function ennemieSpawn(interval){
@@ -159,3 +168,36 @@ ennemieSpawn(1000)
 function getRandomArbitrary(min, max) {
     return Math.random() * (max - min) + min;
 }
+
+function keyPressed(){
+    if (keyCode === LEFT_ARROW) {
+        stateMouvement.left = true
+    }
+    if (keyCode == RIGHT_ARROW) {
+        stateMouvement.right = true
+
+    }
+    if (keyCode == DOWN_ARROW) {
+        stateMouvement.down = true
+
+    }
+    if (keyCode == UP_ARROW) {
+        stateMouvement.up = true
+
+    }
+}
+
+function keyReleased() {
+    if (keyCode === LEFT_ARROW) {
+        stateMouvement.left = false
+    }
+    if (keyCode == RIGHT_ARROW) {
+        stateMouvement.right = false
+    }
+    if (keyCode == DOWN_ARROW) {
+        stateMouvement.down = false
+    }
+    if (keyCode == UP_ARROW) {
+        stateMouvement.up = false
+    }
+  }
