@@ -9,8 +9,16 @@ const httpServer = createServer(app);
 const io = new Server(httpServer, { /* options */ });
 
 io.on("connection", (socket) => {
-  // ...
+
 });
+
+// socket.emit("setSpeed", 1)
+// socket.emit("fire")
+// socket.emit("mouvement" , 
+// {
+//   x: "idle",
+//   y: "idle"
+// })
 
 app.get("/", (req, res) => {
   res.sendFile(join(__dirname, "/GAME/index.html"))
