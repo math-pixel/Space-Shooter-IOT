@@ -8,7 +8,7 @@ let shipX, shipY;
 let missileX, missileY;
 let allMissile = []
 const missileSpeed = 5;
-const shipSpeed = 3;
+let shipSpeed = 3;
 
 let ptLife = 4
 
