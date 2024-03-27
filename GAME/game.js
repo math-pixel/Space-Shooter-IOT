@@ -118,7 +118,7 @@ function drawGame(){
         if (currentEnnemi.y > 800){
             ennemies.splice(index, 1);
             ptLife -= 1
-            if (ptLife > 0) {
+            if (ptLife == 0) {
                 stateGame = "end"
             }
         }else{
