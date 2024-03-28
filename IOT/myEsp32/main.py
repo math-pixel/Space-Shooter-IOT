@@ -1,6 +1,6 @@
 from time import sleep_ms 
 from SocketIOManager import *
-from MPU5060 import *
+from MPU5060_logic import *
 
 server_url = 'http://localhost:8000'
 manager = SocketIOClientManager(server_url)
