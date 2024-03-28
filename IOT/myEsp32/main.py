@@ -1,6 +1,7 @@
 from time import sleep_ms 
 from SocketIOManager import *
 from MPU5060_logic import *
+from MPU5060_sensor import *
 
 server_url = 'http://localhost:8000'
 manager = SocketIOClientManager(server_url)
@@ -10,12 +11,12 @@ manager.sendMessage("message", {"msg": "Hello from ESP32!"})
 threshold = 10
 logicSensor = GYRO(threshold)
 
-fakeValueGyro = { "x": 10, "y":15 }
+sensorGyro = Gyro_Sensor()
 
 while True:
     try:
         print("routine")
-        logicSensor.process(fakeValueGyro)
+        logicSensor.process(sensorGyro.getGyroData())
         sleep_ms(100)
   
     except KeyboardInterrupt:
