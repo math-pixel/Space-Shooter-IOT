@@ -28,4 +28,4 @@ class GYRO():
         else:
             valueY = "IDLE"
 
-        return '{ "x":"' + valueX + '", "y":"'+ valueY +'"}'
+        return { "x": valueX, "y":valueY }
