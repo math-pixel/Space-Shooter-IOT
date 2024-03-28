@@ -14,8 +14,14 @@ def sendSpeed(speed):
 
 logic_Sensor = HC04(10, 20, 30, sendSpeed)
 
-i =  0
+TRIG_PIN = 23
+ECHO_PIN = 24
+real_Sensor = HC04_Sensor(TRIG_PIN, ECHO_PIN)
+real_Sensor.setupSensor()
+
+
 while True:
-    logic_Sensor.process(i)
+
+    distance = real_Sensor.get_distance()
+    logic_Sensor.process(distance)
     time.sleep(1)
-    i += 1

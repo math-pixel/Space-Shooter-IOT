@@ -10,7 +10,7 @@ class HC04_Sensor:
         self.trig = trig
         self.echo = echo
 
-    def setupHC04Sensor(self):
+    def setupSensor(self):
         # Utiliser la numérotation BCM pour les broches GPIO
         GPIO.setmode(GPIO.BCM)
 
@@ -51,7 +51,7 @@ def cleanup():
 if __name__ == '__main__':
     try:
         sensor = HC04_Sensor(TRIG, ECHO)
-        sensor.setupHC04Sensor()
+        sensor.setupSensor()
         while True:
             distance = sensor.get_distance()
             print("Distance:", distance, "cm")
