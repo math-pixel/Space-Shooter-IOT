@@ -1,10 +1,16 @@
-import socketio
+USE_MICROPYTHON = False
+
+if USE_MICROPYTHON:
+    import usocketio as libSocket
+else:
+    import socketio as libSocket
+
 
 class SocketIOClientManager:
 
     def __init__(self, server_url) -> None:
         # Créer une instance de Socket.IO
-        self.client = socketio.Client()
+        self.client = libSocket.Client()
         # Connexion au serveur Socket.IO
         self.conn = self.client.connect(server_url)
 
@@ -33,7 +39,7 @@ class SocketIOClientManager:
         self.client.on('error', self.on_error)
 
 # URL du serveur Socket.IO
-server_url = 'http://localhost:8000'  # Remplacez localhost:3000 par l'URL de votre serveur
+#server_url = 'http://localhost:8000'  # Remplacez localhost:3000 par l'URL de votre serveur
 
 # manager = SocketIOClientManager(server_url)
 # manager.setup_event_handlers()

@@ -4,6 +4,8 @@ from HC04 import *
 from HC04_Sensor import *
 
 # Create websocket client
+
+server_url = 'http://localhost:8000'
 manager = SocketIOClientManager(server_url)
 manager.setup_event_handlers()
 
