@@ -5,7 +5,7 @@ GPIO.setwarnings(False) # Ignore warning for now
 
 class InputButton:
 
-    def __init__(self, pin, callbackOnPress, callbackOnRelease) -> None:
+    def __init__(self, pin, callbackOnPress = None, callbackOnRelease = None) -> None:
         GPIO.setmode(GPIO.BCM) # Use physical pin numbering
         GPIO.setup(pin, GPIO.IN) # Set pin 10 to be an input pin and set initial value to be pulled low (off)
         self.pin = pin
