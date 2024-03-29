@@ -41,4 +41,12 @@ app.get("/", (req, res) => {
   res.sendFile(join(__dirname, "/GAME/index.html"))
 })
 
+app.get("/dataGyro", (req, res) => {
+  const x = req.query.x; // x: left | right | idle,
+  const y = req.query.y; // y: up | down | idle
+  console.log("new data position : ", x, y)
+  io.emit("mouvement", {x: x, y:y})
+  res.send("data receive")
+})
+
 httpServer.listen(8000);
