@@ -9,6 +9,11 @@ let missileX, missileY;
 let allMissile = []
 const missileSpeed = 5;
 let shipSpeed = 3;
+let fuelImg;
+
+let fuelMax = 10000
+let fuelMaxWidthVisual = 200
+let fuelCurrent = fuelMax
 
 let ptLife = 4
 
@@ -25,11 +30,13 @@ let ennemieSpeed = 2
 
 
 function preload() {
-  shipImg = loadImage('assets/ship.png');
-  missileImg = loadImage('assets/laser.png');
-  ennemieImg = loadImage('assets/ship2.png');
-  backgroundImage = loadImage('assets/bg.jpg')
+    shipImg = loadImage('assets/ship.png');
+    missileImg = loadImage('assets/laser.png');
+    ennemieImg = loadImage('assets/ship2.png');
+    backgroundImage = loadImage('assets/bg.jpg')
     backgroundImage.play()
+
+    fuelImg = loadImage("assets/fuel.png")
 
     lifeImage = [loadImage('assets/lifes/1.png'), loadImage('assets/lifes/2.png'), loadImage('assets/lifes/3.png'),loadImage('assets/lifes/4.png'),loadImage('assets/lifes/5.png')]
 }
@@ -75,21 +82,27 @@ function drawGame(){
     // Calculate skew values based on movement
     let skewX = 0;
     let skewY = 0;
+
     if (stateMouvement.left) {
         shipX -= shipSpeed;
         skewX = -0.1;
+        fuelCurrent -= shipSpeed
     }
     if (stateMouvement.right) {
         shipX += shipSpeed;
         skewX = 0.1;
+        fuelCurrent -= shipSpeed
     }
     if (stateMouvement.up) {
         shipY -= shipSpeed;
         skewY = -0.1;
+        fuelCurrent -= shipSpeed
+
     }
     if (stateMouvement.down) {
         shipY += shipSpeed;
         skewY = 0.1;
+        fuelCurrent -= shipSpeed
     }
     
     // Draw ship with skew
@@ -139,7 +152,27 @@ function drawGame(){
         
         currentEnnemi.y += currentEnnemi.speed;
     })
+
+    // draw life
     image(lifeImage[ptLife], 0, 0)
+
+    // draw fuel
+    image(fuelImg, 700, 15, 50, 50)
+
+
+    if (fuelCurrent <= 2) {
+        stateGame = "end"   
+    }
+
+    // background fuel
+    fill(150,50,50)
+    rect(770, 20, fuelMaxWidthVisual, 40, 10)
+    
+    fill(255,50,50)
+    let width = mapValue(fuelCurrent, 0, fuelMax, 0, fuelMaxWidthVisual)
+    rect(770, 20, width, 40, 10)
+
+    
 }
 
 // Step 4: Firing
@@ -201,3 +234,16 @@ function keyReleased() {
         stateMouvement.up = false
     }
   }
+
+
+  function mapValue(value, inMin, inMax, outMin, outMax) {
+
+    // Calculate the ratio of the input range
+    const inRange = inMax - inMin;
+    const outRange = outMax - outMin;
+
+    // Map the value to the output range
+    const mappedValue = ((value - inMin) / inRange) * outRange + outMin;
+
+    return mappedValue;
+}
