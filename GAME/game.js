@@ -15,6 +15,8 @@ let fuelMax = 10000
 let fuelMaxWidthVisual = 200
 let fuelCurrent = fuelMax
 
+let takableFuel = []
+
 let ptLife = 4
 
 let stateGame = "inGame" // home , inGame, end
@@ -105,7 +107,9 @@ function drawGame(){
         fuelCurrent -= shipSpeed
     }
     
-    // Draw ship with skew
+    /* -------------------------------------------------------------------------- */
+    /*                             Draw ship with skew                            */
+    /* -------------------------------------------------------------------------- */
     push();
     translate(shipX, shipY);
     shearX(skewX);
@@ -115,7 +119,9 @@ function drawGame(){
 
     pop();
   
-    // Draw missile
+    /* -------------------------------------------------------------------------- */
+    /*                                Draw missile                                */
+    /* -------------------------------------------------------------------------- */
     allMissile.forEach((currentMissile, index) => {
         image(missileImg, currentMissile.x, currentMissile.y, 50, 50);
         currentMissile.y -= missileSpeed;
@@ -125,7 +131,9 @@ function drawGame(){
         }
     })
     
-    // draw ennemie
+    /* -------------------------------------------------------------------------- */
+    /*                                draw ennemie                                */
+    /* -------------------------------------------------------------------------- */
     ennemies.forEach((currentEnnemi, index) => {
         image(ennemieImg, currentEnnemi.x, currentEnnemi.y, 50, 50);
 
@@ -134,17 +142,23 @@ function drawGame(){
         
         
         if (currentEnnemi.y > 800){
+            // if ennemie touch bottom border
             ennemies.splice(index, 1);
             ptLife -= 1
             if (ptLife == 0) {
                 stateGame = "end"
             }
         }else{
+            //test collision ennemy and rocket
             allMissile.forEach((cMissile, indexMissile) => {
                 rectMissile = [cMissile.x, cMissile.y, 50, 50]
                 if (rectIsInRect(rectCurrentEnnemi, rectMissile)) {
                     allMissile.splice(indexMissile,1)
                     ennemies.splice(index, 1);
+                    //drop fuel
+                    if (Math.random() > 0.8) {
+                        takableFuel.push({x: currentEnnemi.x, y: currentEnnemi.y })
+                    }
                 }
             })
         }
@@ -152,6 +166,26 @@ function drawGame(){
         
         currentEnnemi.y += currentEnnemi.speed;
     })
+
+    /* -------------------------------------------------------------------------- */
+    /*                                  Draw Fuel                                 */
+    /* -------------------------------------------------------------------------- */
+
+    takableFuel.forEach((currentFuel, indexFuel) => {
+        image(fuelImg, currentFuel.x, currentFuel.y, 50, 50)
+
+        rectCurrentFuel = [currentFuel.x, currentFuel.y, 50, 50] 
+        rectPlayer = [shipX, shipY, 100, 100]
+
+        if (rectIsInRect(rectCurrentFuel, rectPlayer)) {
+            takableFuel.splice(indexFuel,1)
+            fuelCurrent = fuelMax
+        }
+    })
+
+    /* -------------------------------------------------------------------------- */
+    /*                                     GUI                                    */
+    /* -------------------------------------------------------------------------- */
 
     // draw life
     image(lifeImage[ptLife], 0, 0)
