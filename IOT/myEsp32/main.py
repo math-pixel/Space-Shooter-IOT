@@ -4,8 +4,22 @@ from MPU5060_logic import *
 from MPU5060_sensor import *
 from machine import I2C, Pin
 
+import urequests
+
+server_url = 'http://localhost:8000'
+
+lastX = ""
+lastY = ""
+def sendMouvementHTTP(mouvement):
+    
+    if mouvement.x != lastX or mouvement.y != lastY:
+        lastX = mouvement.x
+        lastY = mouvement.y
+        urequests.get(server_url+ f"?x={mouvement.x}&y={mouvement.y}")
+    else:
+        print("same than last value")
+
 # --------------------------------- Websocket -------------------------------- #
-# server_url = 'http://localhost:8000'
 # manager = SocketIOClientManager(server_url)
 # manager.setup_event_handlers()
 # manager.sendMessage("message", {"msg": "Hello from ESP32!"})
@@ -27,7 +41,8 @@ while True:
 
         X = 0 # set with gyro Y
         Y = 0 # set with gyro X
-        logicSensor.process({"x": X, "y":Y}) #sensorGyro.getGyroData()
+        mouvement = logicSensor.process({"x": X, "y":Y}) #sensorGyro.getGyroData()
+        sendMouvementHTTP(mouvement)
         sleep_ms(100)
   
     except KeyboardInterrupt:
