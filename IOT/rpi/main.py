@@ -15,7 +15,7 @@ manager.setup_event_handlers()
 # ----------------------------- HC04 sensor logic ---------------------------- #
 def sendSpeed(speed):
     manager.sendMessage("setSpeed", speed)
-logic_Sensor = HC04Manager(max1=10, max2=20, max3=30, callback=sendSpeed)
+logic_Sensor = HC04Manager(max1=5, max2=9, max3=30, callback=sendSpeed)
 
 # ----------------------------- HC04 Real Sensor ----------------------------- #
 TRIG_PIN = 23

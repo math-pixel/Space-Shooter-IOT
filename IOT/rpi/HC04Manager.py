@@ -19,11 +19,11 @@ class HC04Manager():
            self.updateState(HC04_State_Range_Unknown(self)) 
 
     def actionRange1(self):
-        self.callback(2)
-    def actionRange2(self):
-        self.callback(6)
-    def actionRange3(self):
         self.callback(10)
+    def actionRange2(self):
+        self.callback(5)
+    def actionRange3(self):
+        self.callback(2)
     def actionRangeUnknown(self):
         #self.callback(None)
         print("unknow")
