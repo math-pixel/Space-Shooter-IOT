@@ -12,4 +12,7 @@ class InterfaceHC04Delegate:
     def actionRange3(self):
         pass
 
+    def errorRange(self):
+        pass
+
     
