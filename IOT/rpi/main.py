@@ -25,6 +25,9 @@ class ActionDelegateHC04(InterfaceHC04Delegate):
 
     def actionRange3(self):
         manager.sendMessage("setSpeed", 10)
+        
+    def errorRange(self):
+        print("error")
 
 actionHC04 = ActionDelegateHC04()
 logic_Sensor = HC04Manager(max1=10, max2=20, max3=30, delegate=actionHC04)
