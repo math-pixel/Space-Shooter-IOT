@@ -14,7 +14,7 @@ class SocketIOClientManager:
         # Connexion au serveur Socket.IO
         self.conn = self.client.connect(server_url)
 
-    def sendMessage(self, channel, myData):
+    def sendMessage(self, channel, myData="no data transmited"):
         self.client.emit(channel, data=myData)
 
     def disconnect(self):
