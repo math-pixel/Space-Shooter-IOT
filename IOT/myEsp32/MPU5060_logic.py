@@ -13,19 +13,19 @@ class GYRO():
         valueY = "IDLE"
 
         # state X
-        if valueGyro.x < valueIdleX - self.threshold:
-            valueX = "LEFT"
-        elif valueGyro.x > valueIdleX + self.threshold:
-            valueX = "RIGHT"
+        if valueGyro["x"] < valueIdleX - self.threshold:
+            valueX = "right"
+        elif valueGyro["x"] > valueIdleX + self.threshold:
+            valueX = "left"
         else:
-            valueX = "IDLE"
+            valueX = "idle"
 
         # state Y
-        if valueGyro.y < valueIdleY - self.threshold:
-            valueY = "DOWN"
-        elif valueGyro.y > valueIdleY + self.threshold:
-            valueY = "UP"
+        if valueGyro["y"] < valueIdleY - self.threshold:
+            valueY = "up"
+        elif valueGyro["y"] > valueIdleY + self.threshold:
+            valueY = "down"
         else:
-            valueY = "IDLE"
+            valueY = "idle"
 
         return { "x": valueX, "y":valueY }

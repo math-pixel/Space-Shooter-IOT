@@ -1,23 +1,32 @@
 from time import sleep_ms 
-from SocketIOManager import *
 from MPU5060_logic import *
 from MPU5060_sensor import *
 from machine import I2C, Pin
 
-import urequests
+import requests
 
-server_url = 'http://localhost:8000'
+server_url = "192.168.107.134:8000/dataGyro"
+#server_url = "http://192.168.107.134:8000"
 
-lastX = ""
-lastY = ""
+mylastX = ""
+mylastY = ""
 def sendMouvementHTTP(mouvement):
-    
-    if mouvement.x != lastX or mouvement.y != lastY:
-        lastX = mouvement.x
-        lastY = mouvement.y
-        urequests.get(server_url+ f"?x={mouvement.x}&y={mouvement.y}")
+    global mylastX
+    global mylastY
+    print("mouv" , mouvement)
+    print("last" , mylastX, mylastY)
+    if mouvement["x"] != mylastX or mouvement["y"] != mylastY:
+        mylastX = mouvement["x"]
+        mylastY = mouvement["y"]
+        myrequest = url = "http://{}/?x={}&y={}".format(server_url, mylastX, mylastY)
+        print("NEW request :", myrequest)
+        rep = requests.get(myrequest)
+        
+        print("Response Status Code:", rep.status_code)
+        print("Response Content:", rep.text)
+        rep.close()
     else:
-        print("same than last value")
+        pass #print("same than last value")
 
 # --------------------------------- Websocket -------------------------------- #
 # manager = SocketIOClientManager(server_url)
@@ -25,7 +34,7 @@ def sendMouvementHTTP(mouvement):
 # manager.sendMessage("message", {"msg": "Hello from ESP32!"})
 
 # ------------------------------- Logic Sensor ------------------------------- #
-threshold = 10
+threshold = 10000
 logicSensor = GYRO(threshold)
 
 # -------------------------------- Real Sensor ------------------------------- #
@@ -36,11 +45,11 @@ sensorGyro = Gyro_Sensor(i2c)
 while True:
     try:
         print("routine")
-        sensorGyro.get_values()
-        print(sensorGyro.get_values())
+        valueSensor = sensorGyro.get_values()
+        #print("X : ", sensorGyro.get_values()["AcX"], " ", "Y : ", sensorGyro.get_values()["AcY"])
 
-        X = 0 # set with gyro Y
-        Y = 0 # set with gyro X
+        X = valueSensor["AcX"] 
+        Y = valueSensor["AcY"] 
         mouvement = logicSensor.process({"x": X, "y":Y}) #sensorGyro.getGyroData()
         sendMouvementHTTP(mouvement)
         sleep_ms(100)

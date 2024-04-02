@@ -17,13 +17,4 @@ def connect_wifi(ssid, password):
     print('Configuration réseau :', wlan.ifconfig())
 
 # Remplacer 'your-ssid' par votre SSID Wi-Fi et 'your-password' par votre mot de passe Wi-Fi
-connect_wifi('your-ssid', 'password')
-
-import upip
-
-# Install urequests library
-upip.install("micropython-urequests")
-
-# Install usocketio library
-upip.install("micropython-usocketio")
-
+connect_wifi('Yey', 'Mathieu123')
