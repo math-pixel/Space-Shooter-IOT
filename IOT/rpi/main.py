@@ -13,24 +13,9 @@ manager.setup_event_handlers()
 
 
 # ----------------------------- HC04 sensor logic ---------------------------- #
-class ActionDelegateHC04(InterfaceHC04Delegate):
-    def __init__(self) -> None:
-        pass
-
-    def actionRange1(self):
-        manager.sendMessage("setSpeed", 2)
-
-    def actionRange2(self):
-        manager.sendMessage("setSpeed", 6)
-
-    def actionRange3(self):
-        manager.sendMessage("setSpeed", 10)
-        
-    def errorRange(self):
-        print("error")
-
-actionHC04 = ActionDelegateHC04()
-logic_Sensor = HC04Manager(max1=10, max2=20, max3=30, delegate=actionHC04)
+def sendSpeed(speed):
+    manager.sendMessage("setSpeed", speed)
+logic_Sensor = HC04Manager(max1=10, max2=20, max3=30, callback=sendSpeed)
 
 # ----------------------------- HC04 Real Sensor ----------------------------- #
 TRIG_PIN = 23

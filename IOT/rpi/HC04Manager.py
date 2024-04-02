@@ -1,12 +1,12 @@
 
 class HC04Manager():
 
-    def __init__(self, max1, max2, max3, delegate) -> None:
+    def __init__(self, max1, max2, max3, callback) -> None:
         self.state = HC04_State_Range_Unknown(self)
         self.max1 = max1
         self.max2 = max2
         self.max3 = max3
-        self.delegate = delegate
+        self.callback = callback
 
     def process(self, valueSensor):
         if valueSensor <= self.max1:
@@ -19,13 +19,13 @@ class HC04Manager():
            self.updateState(HC04_State_Range_Unknown(self)) 
 
     def actionRange1(self):
-        self.delegate.actionRange1()
+        self.callback(2)
     def actionRange2(self):
-        self.delegate.actionRange2()
+        self.callback(6)
     def actionRange3(self):
-        self.delegate.actionRange3()
+        self.callback(10)
     def actionRangeUnknown(self):
-        self.delegate.errorRange()
+        self.callback(None)
         print("unknow")
 
     def updateState(self, state):
