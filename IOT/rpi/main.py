@@ -3,6 +3,7 @@ from SocketIOManager import *
 from HC04 import *
 from HC04_Sensor import *
 from ButtonManager import *
+from ButtonDelegate import *
 
 # Create websocket client
 server_url = 'http://localhost:8000'
@@ -24,9 +25,15 @@ real_Sensor = HC04_Sensor(TRIG_PIN, ECHO_PIN)
 real_Sensor.setupSensor()
 
 # ---------------------------------- Button ---------------------------------- #
-def buttonPressAction():
-    manager.sendMessage("fire")
-button = InputButton(13, callbackOnPress=buttonPressAction)
+class ActionButton(InterfaceButton):
+    def __init__(self):
+        pass
+
+    def onClick(self):
+        manager.sendMessage("fire")
+
+delegateActionButton = ActionButton()
+button = InputButton(13, delegate=delegateActionButton)
 
 while True:
 
