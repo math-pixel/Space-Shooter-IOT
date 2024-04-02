@@ -42,4 +42,4 @@ while True:
     distance = real_Sensor.get_distance()
     logic_Sensor.process(distance)
     button.process()
-    time.sleep(1)
+    time.sleep(0.2)
