@@ -27,7 +27,7 @@ class ActionDelegateHC04(InterfaceHC04Delegate):
         manager.sendMessage("setSpeed", 10)
 
 actionHC04 = ActionDelegateHC04()
-logic_Sensor = HC04Manager(10, 20, 30, actionHC04)
+logic_Sensor = HC04Manager(max1=10, max2=20, max3=30, delegate=actionHC04)
 
 # ----------------------------- HC04 Real Sensor ----------------------------- #
 TRIG_PIN = 23
