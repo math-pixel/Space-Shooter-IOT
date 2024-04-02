@@ -13,7 +13,7 @@ manager.setup_event_handlers()
 
 
 # ----------------------------- HC04 sensor logic ---------------------------- #
-class ActionDelegateHC04():
+class ActionDelegateHC04(InterfaceHC04Delegate):
     def __init__(self) -> None:
         pass
 
@@ -26,7 +26,7 @@ class ActionDelegateHC04():
     def actionRange3(self):
         manager.sendMessage("setSpeed", 10)
 
-actionHC04 = ActionDelegateHC04(InterfaceHC04Delegate)
+actionHC04 = ActionDelegateHC04()
 logic_Sensor = HC04Manager(10, 20, 30, actionHC04)
 
 # ----------------------------- HC04 Real Sensor ----------------------------- #
