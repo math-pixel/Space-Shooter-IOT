@@ -1,22 +1,33 @@
 import time
 from SocketIOManager import *
-from HC04 import *
+from HC04Manager import *
 from HC04_Sensor import *
 from ButtonManager import *
 from ButtonDelegate import *
+from HC04Delegate import *
 
 # Create websocket client
-server_url = 'http://localhost:8000'
+server_url = 'http://192.168.107.134:8000'
 manager = SocketIOClientManager(server_url)
 manager.setup_event_handlers()
 
 
 # ----------------------------- HC04 sensor logic ---------------------------- #
-def sendSpeed(speed):
-    if speed != None:
-        manager.sendMessage("setSpeed", speed)
+class ActionDelegateHC04():
+    def __init__(self) -> None:
+        pass
 
-logic_Sensor = HC04(10, 20, 30, sendSpeed)
+    def actionRange1(self):
+        manager.sendMessage("setSpeed", 2)
+
+    def actionRange2(self):
+        manager.sendMessage("setSpeed", 6)
+
+    def actionRange3(self):
+        manager.sendMessage("setSpeed", 10)
+
+actionHC04 = ActionDelegateHC04(InterfaceHC04Delegate)
+logic_Sensor = HC04Manager(10, 20, 30, actionHC04)
 
 # ----------------------------- HC04 Real Sensor ----------------------------- #
 TRIG_PIN = 23
@@ -30,7 +41,7 @@ class ActionButton(InterfaceButton):
         pass
 
     def onClick(self):
-        manager.sendMessage("fire")
+        manager.sendMessage("fire", "nothing")
 
 delegateActionButton = ActionButton()
 button = InputButton(13, delegate=delegateActionButton)
