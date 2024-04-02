@@ -31,6 +31,9 @@ class ActionButton(InterfaceButton):
     def onClick(self):
         manager.sendMessage("fire", "nothing")
 
+    def onRelease(self):
+        print("button release")
+
 delegateActionButton = ActionButton()
 button = InputButton(13, delegate=delegateActionButton)
 
