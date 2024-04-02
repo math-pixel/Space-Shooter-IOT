@@ -25,5 +25,5 @@ class InputButton:
         elif GPIO.input(self.pin) == GPIO.LOW :
 
             if self.lastState != GPIO.LOW:
-                self.onRelease()
+                self.delegate.onRelease()
                 self.lastState = GPIO.LOW
