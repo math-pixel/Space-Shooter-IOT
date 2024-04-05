@@ -16,9 +16,11 @@ class SocketIOClientManager(TestableClass):
         self.conn = self.client.connect(server_url)
 
     def testSensor(self):
-        if self.conn:
+        if self.conn == True:
+            print("sucess socket io")
             return DISPLAY.SUCCESS
         else:
+            print("error socket")
             return DISPLAY.ERROR_SENSOR
 
     def sendMessage(self, channel, myData="no data transmited"):
