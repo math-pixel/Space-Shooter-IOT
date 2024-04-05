@@ -8,14 +8,14 @@ class WIFI(TestableClass):
         pass
 
     def testSensor(self):
+        status = DISPLAY.ERROR_SENSOR
         try:
             url = "https://www.google.com"
             urllib.urlopen(url)
-            status = "Connected"
-            return DISPLAY.SUCCESS
+            status = DISPLAY.SUCCESS
+             
         except:
-            status = "Not connected"
-            return DISPLAY.ERROR_SENSOR
-
-    
+            pass
+        
+        return status
 

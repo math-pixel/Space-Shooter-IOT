@@ -26,7 +26,7 @@ class Testeur:
             index = arraySensor.index(sensor)
 
             # display phase test X
-            Displayer.displayErrorCode(DISPLAY.PHASE_X, index, 0.5)
+            Displayer.displayErrorCode(DISPLAY.PHASE_X, index + 1, 0.5)
             time.sleep(Testeur.intervalTimeIntoPhase)
 
             resultCode = sensor.testSensor()
