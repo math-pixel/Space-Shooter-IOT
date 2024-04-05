@@ -1,12 +1,25 @@
 import machine
-
-class Gyro_Sensor():
+from SequenceTesteur import *
+from Display import DISPLAY
+class Gyro_Sensor(TestableClass):
     def __init__(self, i2c, addr=0x68):
         self.iic = i2c
         self.addr = addr
-        self.iic.start()
-        self.iic.writeto(self.addr, bytearray([107, 0]))
-        self.iic.stop()
+
+        self.exeception = False
+
+        try:
+            self.iic.start()
+            self.iic.writeto(self.addr, bytearray([107, 0]))
+            self.iic.stop()
+        except:
+            self.exeception = True
+
+    def testSensor(self):
+        if self.exeception == False:
+            return DISPLAY.SUCCESS
+        else:
+            return DISPLAY.ERROR_SENSOR
 
     def get_raw_values(self):
         self.iic.start()

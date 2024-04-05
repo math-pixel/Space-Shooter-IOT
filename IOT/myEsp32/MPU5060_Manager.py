@@ -5,7 +5,7 @@ class MPU6050GyroManager():
         self.sensor = sensor
         self.logicSensor = logicSensor
         self.delegateSensor = delegateSensor
-
+        
     def process(self):
         valueSensor = self.sensor.get_values()
         stateSensor = self.logicSensor.process(valueSensor)

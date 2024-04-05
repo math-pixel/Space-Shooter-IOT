@@ -1,23 +1,42 @@
 import time
+
+# Enum error Code
+class DISPLAY:
+    PHASE_X = "1"
+    SUCCESS = "200"
+    ERROR_SENSOR = "300"
+    ERROR_INPUT_USER = "400"
+
 class Displayer:
 
     _errors = {
         "1": {
             "name" : "Test Phase X",
+            "message" : "Start phase X",
             "ledAlert" : {
-                "intervalBlink" : 1,
+                "intervalBlink" : 0.5,
                 "numberBlink": None
             }
         },
-        "42": {
+        "200": {
             "name" : "succes",
+            "message" : "Sensor Work Succesfully",
             "ledAlert" : {
                 "intervalBlink" : 0.5,
                 "numberBlink": 5
             }
         },
-        "404": {
-            "name" : "Error",
+        "300": {
+            "name" : "Error Sensor Disfonctionnement",
+            "message" : "Error Sensor Disfonctionnement",
+            "ledAlert" : {
+                "intervalBlink" : 0.5,
+                "numberBlink": 5
+            }
+        },
+        "400": {
+            "name" : "Error Input User",
+            "message" : "Error Input User",
             "ledAlert" : {
                 "intervalBlink" : 0.2,
                 "numberBlink": 10
@@ -32,8 +51,9 @@ class Displayer:
     def turnOnLed(errorInformation):
         iterator = errorInformation["ledAlert"]["numberBlink"]
         waitingTime = errorInformation["ledAlert"]["intervalBlink"]
+        message = errorInformation["message"]
         for i in range(iterator):
-            print("led On")
+            print(message)
             time.sleep(waitingTime)
         
 
