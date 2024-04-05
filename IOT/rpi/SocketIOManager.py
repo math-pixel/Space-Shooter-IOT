@@ -1,18 +1,25 @@
 USE_MICROPYTHON = False
-
+from SequenceTesteur import TestableClass
+from Display import DISPLAY
 if USE_MICROPYTHON:
     import usocketio as libSocket
 else:
     import socketio as libSocket
 
 
-class SocketIOClientManager:
+class SocketIOClientManager(TestableClass):
 
     def __init__(self, server_url) -> None:
         # Créer une instance de Socket.IO
         self.client = libSocket.Client()
         # Connexion au serveur Socket.IO
         self.conn = self.client.connect(server_url)
+
+    def testSensor(self):
+        if self.conn:
+            return DISPLAY.SUCCESS
+        else:
+            return DISPLAY.ERROR_SENSOR
 
     def sendMessage(self, channel, myData="no data transmited"):
         self.client.emit(channel, data=myData)

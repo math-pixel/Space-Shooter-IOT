@@ -1,10 +1,13 @@
 import RPi.GPIO as GPIO
 import time
+from SequenceTesteur import *
+from Display import *
+import time
 
 # Définir les broches du capteur
 TRIG = 23
 ECHO = 24
-class HC04_Sensor:
+class HC04_Sensor(TestableClass):
 
     def __init__(self, trig, echo) -> None:
         self.trig = trig
@@ -18,6 +21,16 @@ class HC04_Sensor:
         GPIO.setup(self.trig, GPIO.OUT)
         # Définir ECHO comme une broche d'entrée
         GPIO.setup(self.echo, GPIO.IN)
+
+    def testSensor(self):
+
+        time.sleep(5)
+        
+        distance = self.get_distance()
+        if distance > 5 and distance < 10:
+            return DISPLAY.SUCCESS
+        else:
+            return DISPLAY.ERROR_INPUT_USER
 
     def get_distance(self):
         # Envoyer une impulsion ultrasonique

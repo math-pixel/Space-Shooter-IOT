@@ -5,6 +5,7 @@ from HC04_Sensor import *
 from ButtonManager import *
 from ButtonDelegate import *
 from HC04Delegate import *
+from MyNetwork import *
 
 # Create websocket client
 server_url = 'http://192.168.107.134:8000'
@@ -36,6 +37,12 @@ class ActionButton(InterfaceButton):
 
 delegateActionButton = ActionButton()
 button = InputButton(13, delegate=delegateActionButton)
+
+# --------------------------------- test part -------------------------------- #
+wifiTesteur = WIFI()
+allSensors = [wifiTesteur, button, real_Sensor]
+Testeur.TestSensors(allSensors)
+
 
 while True:
 
