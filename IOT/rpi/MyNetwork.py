@@ -1,4 +1,4 @@
-import urllib
+import subprocess
 from SequenceTesteur import TestableClass
 from Display import *
 
@@ -8,14 +8,9 @@ class WIFI(TestableClass):
         pass
 
     def testSensor(self):
-        status = DISPLAY.ERROR_SENSOR
-        try:
-            url = "https://www.google.com"
-            urllib.urlopen(url)
-            status = DISPLAY.SUCCESS
-             
-        except:
-            pass
-        
-        return status
+        resultat = subprocess.run(['iwgetid'], capture_output=True, text=True)
+        if resultat.stdout.strip():
+            return DISPLAY.SUCCESS
+        else:
+            return DISPLAY.ERROR_SENSOR
 

@@ -40,7 +40,7 @@ button = InputButton(13, delegate=delegateActionButton)
 
 # --------------------------------- test part -------------------------------- #
 wifiTesteur = WIFI()
-allSensors = [wifiTesteur, button, real_Sensor]
+allSensors = [wifiTesteur, manager, button, real_Sensor]
 Testeur.TestSensors(allSensors)
 
 
