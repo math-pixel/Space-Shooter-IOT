@@ -41,6 +41,10 @@ app.get("/", (req, res) => {
   res.sendFile(join(__dirname, "/GAME/index.html"))
 })
 
+app.get("/ping", (req, res) => {
+  res.send("200")
+})
+
 app.get("/dataGyro", (req, res) => {
   const x = req.query.x; // x: left | right | idle,
   const y = req.query.y; // y: up | down | idle

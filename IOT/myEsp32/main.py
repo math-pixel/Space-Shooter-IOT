@@ -5,31 +5,43 @@ from MPU5060_Manager import *
 from DelegateGyroSensor import *
 from machine import I2C, Pin
 from SequenceTesteur import *
+from MyNetwork import *
 
 import requests
-server_url = "192.168.107.134:8000/dataGyro"
+server_url = "192.168.107.134:8000/"
+directory = "dataGyro"
 #server_url = "http://192.168.107.134:8000" 
 
-class SenderManager():
+class SenderManager(TestableClass):
 
-    def __init__(self) -> None:
+    def __init__(self, server_url, directory) -> None:
         self.x = ""
         self.y = ""
         self.lastX = ""
         self.lastY = ""
+        self.server_url = server_url
+        self.directory = directory
 
     def updateAxe(self, axe, newValue):
         if axe == "x":
             self.x = newValue
         else:
             self.y = newValue
-
+    
+    def testSensor(self):
+        url = "http://{}/".format(self.server_url)
+        rep = requests.get(url)
+        if rep.status_code == 200:
+            return DISPLAY.SUCCESS
+        else:
+            return DISPLAY.ERROR_SENSOR
+        rep.close()
 
     def sendMouvement(self):
         if self.lastX != self.x or self.lastY != self.y:
             self.lastX = self.x
             self.lastY = self.y
-            url = "http://{}/?x={}&y={}".format(server_url, self.x, self.y)
+            url = "http://{}/?x={}&y={}".format(self.server_url + self.directory, self.x, self.y)
             print("NEW request :", url)
             rep = requests.get(url)
             
@@ -42,7 +54,7 @@ class SenderManager():
 # manager = SocketIOClientManager(server_url)
 # manager.setup_event_handlers()
 # manager.sendMessage("message", {"msg": "Hello from ESP32!"})
-senderInformation = SenderManager()
+senderInformation = SenderManager(server_url, directory)
 # ---------------------------------------------------------------------------- #
 #                                  Gyro Sensor                                 #
 # ---------------------------------------------------------------------------- #
@@ -86,12 +98,13 @@ class actionGyroSensor(DelegateGyroSensorInterface):
         senderInformation.sendMouvement()
 
 actionDelegation = actionGyroSensor()
-    
+
 # ------------------------------ managerMPU5060 ------------------------------ #
 managerMPU5060 = MPU6050GyroManager(sensorGyro, logicSensor, actionDelegation)
 
 # ------------------------------- Testing Phase ------------------------------ #
-allSensors = [sensorGyro]
+wifiTesteur = WIFI()
+allSensors = [wifiTesteur, senderInformation, sensorGyro]
 Testeur.TestSensors(allSensors)
 
 # -------------------------------- Loop esp32 -------------------------------- #
