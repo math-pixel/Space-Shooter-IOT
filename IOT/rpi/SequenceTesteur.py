@@ -21,13 +21,11 @@ class Testeur:
     @staticmethod
     def TestSensors(arraySensor):
         
+        indexOfTest = 1
         for sensor in arraySensor:
 
-            index = arraySensor.index(sensor)
-
-            # display phase test X
-            Displayer.displayErrorCode(DISPLAY.PHASE_X, index + 1, 0.5)
-            time.sleep(Testeur.intervalTimeIntoPhase)
+            Displayer.displayErrorCode(DISPLAY.PHASE_X, indexOfTest)
+            indexOfTest += 1
 
             resultCode = sensor.testSensor()
             Displayer.displayErrorCode(resultCode)

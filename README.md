@@ -31,3 +31,8 @@ Importante Note for ESP :
 - first blink its normal connection of wifi (ignore it)
 
 ## Raspberry PI
+Order test :
+1) Wifi Connection
+2) Server Connection
+3) Button Test => you have 5 sec for press the button
+4) HC04 Test sensor => you have 5 sec for put your hand in front of the sensor between 5 and 10 cm

@@ -14,7 +14,7 @@ class Displayer:
             "name" : "Test Phase X",
             "message" : "Start phase X",
             "ledAlert" : {
-                "intervalBlink" : 0.5,
+                "intervalBlink" : 1,
                 "numberBlink": None
             }
         },
@@ -30,7 +30,7 @@ class Displayer:
             "name" : "Error Sensor Disfonctionnement",
             "message" : "Error Sensor Disfonctionnement",
             "ledAlert" : {
-                "intervalBlink" : 0.5,
+                "intervalBlink" : 0.2,
                 "numberBlink": 5
             }
         },

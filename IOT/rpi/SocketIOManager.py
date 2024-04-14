@@ -17,7 +17,6 @@ class SocketIOClientManager(TestableClass):
 
     def testSensor(self):
         if self.conn == True:
-            print("sucess socket io")
             return DISPLAY.SUCCESS
         else:
             print("error socket")
